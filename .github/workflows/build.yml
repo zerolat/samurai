@@ -1,0 +1,66 @@
+name: Build and Release Samurai Kernel
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt update && sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev fakeroot bc wget tar xz-utils
+
+      - name: Download kernel source
+        run: |
+          wget -q https://cdn.kernel.org/pub/linux/kernel/v${vars.KERNEL_VERSION%%.*}.x/linux-${vars.KERNEL_VERSION}.tar.xz
+          tar -xvf linux-${vars.KERNEL_VERSION}.tar.xz
+          mv linux-${vars.KERNEL_VERSION} linux
+
+      - name: Copy custom kconfig
+        run: |
+          cp .config linux/.config
+          cd linux
+          make olddefconfig
+
+      - name: Build samurai kernel
+        run: |
+          cd linux
+          make -j$(nproc) deb-pkg
+
+      - name: Collect .deb files
+        id: collect_deb
+        run: |
+          mkdir -p artifacts
+          mv ../*.deb artifacts/
+          echo "deb_files=$(ls artifacts/*.deb | tr '\n' ' ')" >> $GITHUB_ENV
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Samurai Release ${{ github.ref_name }}
+          draft: false
+          prerelease: true
+
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ item }}
+          asset_name: ${{ item }}-amd64.deb
+          asset_content_type: application/octet-stream
+        strategy:
+          matrix:
+            item: ${{ env.deb_files }}
