@@ -19,7 +19,7 @@ jobs:
 
       - name: Download kernel source
         run: |
-          wget -q https://cdn.kernel.org/pub/linux/kernel/v${vars.KERNEL_MAJOR}.x/linux-${vars.KERNEL_VERSION}.tar.xz
+          wget -q "https://cdn.kernel.org/pub/linux/kernel/v${{vars.KERNEL_MAJOR}}.x/linux-${{vars.KERNEL_VERSION}}.tar.xz"
           tar -xvf linux-${vars.KERNEL_VERSION}.tar.xz
           mv linux-${vars.KERNEL_VERSION} linux
 
