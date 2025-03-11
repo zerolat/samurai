@@ -36,8 +36,12 @@ jobs:
 
       - name: Collect .deb files
         run: |
+          pwd
+          ls -la ../
+          ls -la
           mkdir -p artifacts
           mv ../*.deb artifacts/
+          ls -la artifacts/
 
       - name: Create Release
         id: create_release
