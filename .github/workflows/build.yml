@@ -15,7 +15,7 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          sudo apt update && sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev fakeroot bc wget tar xz-utils
+          sudo apt update && sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev fakeroot bc wget tar xz-utils jq
 
       - name: Download kernel source
         run: |
@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p artifacts
           mv ../*.deb artifacts/
-          echo "deb_files=$(ls artifacts/*.deb | tr '\n' ' ')" >> $GITHUB_ENV
+          echo "deb_files=$(ls artifacts/*.deb | jq -R . | jq -s .)" >> $GITHUB_OUTPUT
 
       - name: Create Release
         id: create_release
@@ -58,9 +58,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ item }}
-          asset_name: ${{ item }}-amd64.deb
+          asset_path: ${{ matrix.deb_file }}
+          asset_name: ${{ matrix.deb_file }}-amd64.deb
           asset_content_type: application/octet-stream
         strategy:
           matrix:
-            item: ${{ env.deb_files }}
+            deb_file: ${{ fromJson(steps.collect_deb.outputs.deb_files) }}
