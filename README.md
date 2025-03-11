@@ -12,15 +12,17 @@ The ultimate Linux kernel optimized for low-latency workloads like Edge computin
    git clone https://github.com/0xAFz/samurai.git
    cd samurai
    ```
-3. Download kernel source (e.g., 6.13.x):
+3. Download kernel source (e.g., 6.1.x):
    ```bash
-   wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.13.6.tar.xz
-   tar -xvf linux-6.13.x.tar.xz
-   cd linux-6.13.x
+   wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.1.x.tar.xz
+   tar -xvf linux-6.1.x.tar.xz
+   cd linux-6.1.x
    ```
 4. Copy the config:
    ```bash
    cp ../.config .
+
+   make olddefconfig
    ```
 5. Build the kernel:
    ```bash
@@ -41,7 +43,7 @@ The ultimate Linux kernel optimized for low-latency workloads like Edge computin
    ```bash
    make -j$(nproc) deb-pkg
    ```
-3. Find the output files (e.g., `linux-image-6.13.x_6.13.x-1_amd64.deb`) in the parent directory.
+3. Find the output files (e.g., `linux-image-*_amd64.deb`) in the parent directory.
 
 ## Contributions
 Got ideas to make it faster? Fork the repo, tweak it, and send a PR. We welcome optimizations!
