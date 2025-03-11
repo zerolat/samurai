@@ -15,7 +15,7 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          sudo apt update && sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev fakeroot bc wget tar xz-utils jq
+          sudo apt update && sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev fakeroot bc wget tar xz-utils gh
 
       - name: Download kernel source
         run: |
@@ -32,14 +32,12 @@ jobs:
       - name: Build samurai kernel
         run: |
           cd linux
-          make -j$(nproc) deb-pkg
+          make -j$(nproc) deb-pkg LOCALVERSION=-samurai
 
       - name: Collect .deb files
-        id: collect_deb
         run: |
           mkdir -p artifacts
           mv ../*.deb artifacts/
-          echo "deb_files=$(ls artifacts/*.deb | jq -R . | jq -s .)" >> $GITHUB_OUTPUT
 
       - name: Create Release
         id: create_release
@@ -53,14 +51,9 @@ jobs:
           prerelease: true
 
       - name: Upload Release Assets
-        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ matrix.deb_file }}
-          asset_name: ${{ matrix.deb_file }}-amd64.deb
-          asset_content_type: application/octet-stream
-        strategy:
-          matrix:
-            deb_file: ${{ fromJson(steps.collect_deb.outputs.deb_files) }}
+        run: |
+          for file in artifacts/*.deb; do
+            gh release upload ${{ github.ref_name }} "$file" --clobber
+          done
