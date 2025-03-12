@@ -37,6 +37,10 @@ jobs:
       - name: Collect .deb files
         run: |
           ls -la
+          mv linux-image-*.deb samurai-${{vars.KERNEL_VERSION}}-amd64.deb
+          mv linux-headers-*.deb samurai-headers-${{vars.KERNEL_VERSION}}-amd64.deb
+          mv linux-libc-dev*.deb samurai-libc-dev-${{vars.KERNEL_VERSION}}-amd64.deb
+          ls -la
           mkdir -p artifacts
           mv *.deb artifacts/
 
