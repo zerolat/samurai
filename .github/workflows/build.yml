@@ -23,14 +23,9 @@ jobs:
           tar -xvf linux-${{vars.KERNEL_VERSION}}.tar.xz
           mv linux-${{vars.KERNEL_VERSION}} linux
 
-      - name: Copy custom kconfig
-        run: |
-          cp .config linux/.config
-          cd linux
-          make olddefconfig
-
       - name: Build samurai kernel
         run: |
+          cp .config linux/.config
           cd linux
           make -j$(nproc) deb-pkg LOCALVERSION=-samurai
 
