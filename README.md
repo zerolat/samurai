@@ -37,7 +37,7 @@ The ultimate Linux kernel optimized for low-latency workloads like Edge computin
 ## Debian Package Build Steps
 1. Install packaging tools:
    ```bash
-   sudo apt install -y fakeroot kernel-package
+   sudo apt install -y fakeroot
    ```
 2. Build the `.deb` package:
    ```bash
