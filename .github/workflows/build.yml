@@ -15,7 +15,7 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          sudo apt update && sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev fakeroot bc wget tar lz4 xz-utils gh
+          sudo apt update && sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev fakeroot bc wget tar lz4 xz-utils gh kernel-package
 
       - name: Download kernel source
         run: |
