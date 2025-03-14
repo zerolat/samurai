@@ -21,8 +21,6 @@ The ultimate Linux kernel optimized for low-latency workloads like Edge computin
 4. Copy the config:
    ```bash
    cp ../.config .
-
-   make olddefconfig
    ```
 5. Build the kernel:
    ```bash
@@ -41,7 +39,7 @@ The ultimate Linux kernel optimized for low-latency workloads like Edge computin
    ```
 2. Build the `.deb` package:
    ```bash
-   make -j$(nproc) deb-pkg
+   fakeroot make -j$(nproc) deb-pkg
    ```
 3. Find the output files (e.g., `linux-image-*_amd64.deb`) in the parent directory.
 
