@@ -27,7 +27,7 @@ jobs:
         run: |
           cp .config linux/.config
           cd linux
-          make -j$(nproc) deb-pkg LOCALVERSION=-samurai
+          fakeroot make -j$(nproc) deb-pkg LOCALVERSION=-samurai
 
       - name: Collect .deb files
         run: |
