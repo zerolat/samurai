@@ -69,6 +69,8 @@ fakeroot make -j$(nproc) deb-pkg
 ### 3️⃣ Find the Output Files
 Generated **.deb** files (e.g., `linux-image-*_amd64.deb`) will be in the parent directory.
 
+---
+
 ## Boot Time Performance
 
 The results below showcase a significant improvement compared to the default Debian kernel.
