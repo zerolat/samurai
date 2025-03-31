@@ -69,5 +69,48 @@ fakeroot make -j$(nproc) deb-pkg
 ### 3️⃣ Find the Output Files
 Generated **.deb** files (e.g., `linux-image-*_amd64.deb`) will be in the parent directory.
 
+## Boot Time Performance
+
+The results below showcase a significant improvement compared to the default Debian kernel.
+
+**Testing Environment for Samurai Kernel:**
+
+* **VM:** KVM Infra (**Shared resources**)
+* **CPU:** 2 Cores
+* **RAM:** 4GB
+
+**Samurai Kernel Boot Time:**
+
+* **Kernel Boot Time:** 0.6 seconds
+* **Full System Boot Time (to userspace):** 2 seconds
+
+**Comparison with Default Debian Kernel:**
+
+The default Debian kernel was previously tested on a server with the following specifications:
+* **VM:** KVM Infra (**Shared resources**)
+* **CPU:** 4 Cores
+* **RAM:** 8GB
+
+**Default Debian Kernel Boot Time (Approximate):**
+
+* **Kernel Boot Time:** 3 seconds
+* **Full System Boot Time (to userspace):** 6 seconds
+
+**Performance Improvement:**
+
+Based on these tests, the **Samurai** kernel demonstrates a remarkable improvement in boot time, even when running on a virtual machine with fewer resources:
+
+* **Kernel Boot Time Improvement:**
+    * Improvement: 3 seconds - 0.6 seconds = 2.4 seconds
+    * Percentage Improvement: (2.4 / 3) * 100 = **80% faster** than the default Debian kernel boot time.
+
+* **Full System Boot Time Improvement:**
+    * Improvement: 6 seconds - 2 seconds = 4 seconds
+    * Percentage Improvement: (4 / 6) * 100 ≈ **66.67% faster** than the default Debian full system boot time.
+
+These results highlight the effectiveness of the optimizations implemented in the **Samurai** kernel, delivering significantly faster boot times and a quicker time to a usable system, even on resource-constrained and **shared cloud environments**.
+
+---
+
 ## 🤝 Contributions
 Samurai is built for speed, but there's always room for improvement. Have ideas? **Fork the repo, tweak it, and submit a PR.** We welcome optimizations and performance hacks!
