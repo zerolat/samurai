@@ -4,7 +4,7 @@ Samurai is a **high-performance, low-latency** Linux kernel optimized for worklo
 
 ## ⚠️ Important Considerations
 
-- **Specialized Kernel:** Not for general use. Optimized for specific workloads; compatibility with all hardware/software not guaranteed.
+- **Specialized Kernel:** Not designed for general-purpose use. Samurai is highly optimized and minimal—don’t expect it to work on your smart fridge. 🧊
 - **Reduced Security:** Performance prioritized over comprehensive security mitigations. Use in trusted environments only.
 - **Minimal Drivers:** Limited hardware support due to the removal of unused drivers. Verify compatibility.
 - **No Extensive Debugging:** Focus on performance means minimal logging and debugging features. Troubleshooting may be more challenging.
