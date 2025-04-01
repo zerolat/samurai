@@ -2,21 +2,21 @@
 
 Samurai is a **high-performance, low-latency** Linux kernel optimized for workloads that demand extreme responsiveness. It is **not a generic-use kernel**—it is stripped down to the bare essentials, built for **Edge, VoIP, Gaming, and VPNs**, where every microsecond counts.
 
-## ⚠️ Warnings & Limitations
+## ⚠️ Important Considerations
 
-- **Not designed for general-purpose use.** Samurai is highly optimized and minimal—don’t expect it to work on your smart fridge. 🧊
-- **Security mitigations removed.** To maximize performance, Samurai disables mitigations like Spectre/Meltdown patches. Use in trusted environments.
-- **Minimal driver support.** Unused modules, drivers, and file systems have been stripped out. Check compatibility before use.
-- **Logging & debugging overhead eliminated.** Samurai prioritizes raw performance over diagnostics. If you need extensive logs, this isn't the kernel for you.
+- **Specialized Kernel:** Not for general use. Optimized for specific workloads; compatibility with all hardware/software not guaranteed.
+- **Reduced Security:** Performance prioritized over comprehensive security mitigations. Use in trusted environments only.
+- **Minimal Drivers:** Limited hardware support due to the removal of unused drivers. Verify compatibility.
+- **No Extensive Debugging:** Focus on performance means minimal logging and debugging features. Troubleshooting may be more challenging.
 
 ## 🔥 Key Features
 
-- **Extreme Low Latency:** Configured with **PREEMPT** and fine-tuned scheduling for ultra-responsive performance.
-- **Tickless Kernel (NO_HZ_FULL @ 1000Hz):** Eliminates unnecessary timer interrupts, reducing overhead in real-time workloads.
-- **Lightweight & Minimal:** Unused modules, drivers, and file systems removed for a streamlined footprint.
-- **Security & Debugging Overheads Removed:** No **SELinux, CPU mitigations, or excessive logging**, ensuring maximum efficiency.
-- **Optimized I/O Performance:** Uses **mq-deadline** scheduler for reduced disk latency.
-- **eBPF/XDP Ready:** JIT always enabled for high-performance packet processing in networking applications.
+- **Ultra-Low Latency:** **PREEMPT** enabled with a high-frequency tick rate (**1000Hz**) for exceptional responsiveness in critical applications.
+- **Responsive Scheduling:** Fine-tuned policies ensure timely execution and a smooth, reactive system.
+- **Lightweight Footprint:** Stripped of unnecessary components for reduced overhead and faster boot.
+- **Performance-Focused:** Excludes **SELinux, significant CPU mitigations, and heavy logging** to maximize efficiency.
+- **Accelerated I/O:** **mq-deadline** scheduler for minimized disk latency and improved application speed.
+- **High-Speed Networking:** **eBPF/XDP JIT** enabled for advanced, high-performance packet processing.
 
 ## 🚀 Build & Install
 
