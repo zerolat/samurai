@@ -5,18 +5,16 @@ Samurai is a **high-performance, low-latency** Linux kernel optimized for worklo
 ## ⚠️ Important Considerations
 
 - **Specialized Kernel:** Not designed for general-purpose use. Samurai is highly optimized and minimal—don’t expect it to work on your smart fridge. 🧊
-- **Reduced Security:** Performance prioritized over comprehensive security mitigations. Use in trusted environments only.
-- **Minimal Drivers:** Limited hardware support due to the removal of unused drivers. Verify compatibility.
+- **EXTREME SECURITY WARNING:** This kernel prioritizes maximum performance by disabling virtually all security mitigations. This includes, but is not limited to, Spectre/Meltdown/L1TF/SSB mitigations, SELinux, and other hardening measures. **This configuration is HIGHLY INSECURE and should ONLY be used in trusted, isolated environments where security is explicitly NOT a concern.** If security is a priority for your use case, you MUST re-enable the necessary security mechanisms.
+- **Minimal Drivers:** Limited hardware support due to the removal of unused drivers. Verify compatibility before use.
 - **No Extensive Debugging:** Focus on performance means minimal logging and debugging features. Troubleshooting may be more challenging.
 
 ## 🔥 Key Features
 
-- **Ultra-Low Latency:** **PREEMPT** enabled with a high-frequency tick rate (**1000Hz**) for exceptional responsiveness in critical applications.
-- **Responsive Scheduling:** Fine-tuned policies ensure timely execution and a smooth, reactive system.
-- **Lightweight Footprint:** Stripped of unnecessary components for reduced overhead and faster boot.
-- **Performance-Focused:** Excludes **SELinux, significant CPU mitigations, and heavy logging** to maximize efficiency.
-- **Accelerated I/O:** **mq-deadline** scheduler for minimized disk latency and improved application speed.
-- **High-Speed Networking:** **eBPF/XDP JIT** enabled for advanced, high-performance packet processing.
+- **Extreme Low Latency:** Configured with **PREEMPT** and a **Tickless Kernel (NO_HZ_FULL @ 1000Hz)** optimized for ultra-responsive performance.
+- **Lightweight & Minimal Footprint:** Unused modules, drivers, and file systems removed for a streamlined footprint and reduced overhead.
+- **Performance-Focused:** Deliberately excludes **SELinux, comprehensive CPU security mitigations, and excessive logging** to maximize efficiency and minimize performance impact.
+- **Optimized I/O Performance:** Uses **mq-deadline** scheduler for reduced disk latency.
 
 ## 🚀 Build & Install
 
