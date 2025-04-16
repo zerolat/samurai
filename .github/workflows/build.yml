@@ -6,6 +6,9 @@ on:
     tags:
       - "v*"
 
+permissions:
+  contents: write
+
 env:
   KERNEL_VERSION: ${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}.${{vars.KERNEL_PATCH}}
 
@@ -18,13 +21,10 @@ jobs:
 
       - name: Install build dependencies
         run: |
-          pwd
-          echo $KERNEL_VERSION
           sudo apt update && sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev fakeroot bc wget tar liblz4-tool lz4 xz-utils gh
 
       - name: Download kernel source
         run: |
-          pwd
           wget -q "https://cdn.kernel.org/pub/linux/kernel/v${{vars.KERNEL_MAJOR}}.x/linux-$KERNEL_VERSION.tar.xz"
           tar -xvf linux-$KERNEL_VERSION.tar.xz
           mv linux-$KERNEL_VERSION linux
@@ -32,7 +32,6 @@ jobs:
       - name: Apply RT patch
         working-directory: linux
         run: |
-          pwd
           wget -q "https://cdn.kernel.org/pub/linux/kernel/projects/rt/${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}/patch-$KERNEL_VERSION-rt${{vars.RT_VERSION}}.patch.xz"
           xz -d patch-$KERNEL_VERSION-rt${{vars.RT_VERSION}}.patch.xz
           patch -p1 < patch-$KERNEL_VERSION-rt${{vars.RT_VERSION}}.patch
@@ -40,13 +39,11 @@ jobs:
       - name: Build samurai kernel
         working-directory: linux
         run: |
-          pwd
           cp ../.config .
           fakeroot make -j$(nproc) deb-pkg LOCALVERSION=-samurai
 
       - name: Collect .deb files
         run: |
-          pwd
           ls -la
           mv linux-image-*.deb samurai-$KERNEL_VERSION-amd64.deb
           mv linux-headers-*.deb samurai-headers-$KERNEL_VERSION-amd64.deb
